@@ -23,7 +23,7 @@ namespace plasma_effect
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
+            this.Window.Title = Config.WINDOW_TITLE;
 
             base.Initialize();
         }
