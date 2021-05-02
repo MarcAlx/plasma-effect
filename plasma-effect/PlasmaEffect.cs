@@ -12,8 +12,11 @@ namespace plasma_effect
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont _defaultFont;
+
         private Texture2D _plasma;
         private PlasmaEngine _engine;
+
+        private RandomMovingPoint _movingPoint;
 
         public PlasmaEffect()
         {
@@ -29,6 +32,7 @@ namespace plasma_effect
             this.Window.Title = Config.WINDOW_TITLE;
 
             this._engine = new PlasmaEngine();
+            this._movingPoint = new RandomMovingPoint();
 
             base.Initialize();
         }
@@ -44,6 +48,10 @@ namespace plasma_effect
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
+            //move point
+            this._movingPoint.UpdatePosition(GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
+
+
             //update plasma
             var shift = gameTime.TotalGameTime.Milliseconds % 256;
             this._plasma = this._engine.GeneratePlasma(
@@ -51,10 +59,11 @@ namespace plasma_effect
                 GraphicsDevice.Viewport.Bounds.Width,
                 GraphicsDevice.Viewport.Bounds.Height,
                 ColorRampEnum.RAINBOW,
+                this._movingPoint.Position.X,
+                this._movingPoint.Position.Y,
                 shift,
                 Config.PIXEL_RATIO
             );
-
             base.Update(gameTime);
         }
 
@@ -66,7 +75,13 @@ namespace plasma_effect
             //draw plasma
             this._spriteBatch.Draw(this._plasma, new Vector2(0, 0), Color.White);
 
+            //draw point
+            if (Config.DRAW_MOVINGPOINT)
+            {
+                this._spriteBatch.Draw(this._movingPoint.GetTexture(this.GraphicsDevice), new Vector2(this._movingPoint.Position.X, this._movingPoint.Position.Y), Color.White);
+            }
 
+            //draw fps
             if (Config.DISPLAY_FPS)
             {
                 Toolkit.DrawFPSAt(new Vector2(5, 5), _defaultFont, _spriteBatch, 1 / (float)gameTime.ElapsedGameTime.TotalSeconds);

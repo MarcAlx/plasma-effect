@@ -14,6 +14,11 @@ namespace plasmaeffect
         public static readonly bool DISPLAY_FPS = true;
 
         /// <summary>
+        /// Tells if moving random point should be drawn
+        /// </summary>
+        public static readonly bool DRAW_MOVINGPOINT = false;
+
+        /// <summary>
         /// FPS cap
         /// </summary>
         public static readonly int FPS_CAP = 60;

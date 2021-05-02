@@ -61,5 +61,14 @@ namespace plasmaeffect.Engine
             return p;
         }
 
+        /// <summary>
+        /// Convert a degree angle to radians
+        /// </summary>
+        /// <param name="angle"></param>
+        /// <returns></returns>
+        public static double ConvertToRadians(double angle)
+        {
+            return (Math.PI / 180) * angle;
+        }
     }
 }
