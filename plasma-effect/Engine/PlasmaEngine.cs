@@ -6,19 +6,19 @@ using Microsoft.Xna.Framework.Graphics;
 namespace plasmaeffect.Engine
 {
     public enum ColorRampEnum {
-        GRAY_SCALE
+        GRAY_SCALE,
+        RAINBOW
     }
 
     public class PlasmaEngine
     {
-
-
         private Dictionary<ColorRampEnum, Color[]> _colorRamp;
 
         public PlasmaEngine()
         {
             this._colorRamp = new Dictionary<ColorRampEnum, Color[]>();
             this._colorRamp[ColorRampEnum.GRAY_SCALE] = this.GenerateColorRamp(ColorRampEnum.GRAY_SCALE);
+            this._colorRamp[ColorRampEnum.RAINBOW] = this.GenerateColorRamp(ColorRampEnum.RAINBOW);
         }
 
         /// <summary>
@@ -35,6 +35,14 @@ namespace plasmaeffect.Engine
                 for(int i = 0; i<256; i++)
                 {
                     res[i] = new Color(i, i, i);
+                }
+            }
+            else if (ramp == ColorRampEnum.RAINBOW)
+            {
+                for (int i = 0; i < 256; i++)
+                {
+                    res[i] = Toolkit.FromHsl((float)i/256f,1f,0.5f);
+                    var d = res[i];
                 }
             }
 
