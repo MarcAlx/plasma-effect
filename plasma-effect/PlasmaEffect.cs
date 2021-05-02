@@ -12,6 +12,7 @@ namespace plasma_effect
         private SpriteBatch _spriteBatch;
         private SpriteFont _defaultFont;
         private Texture2D _plasma;
+        private PlasmaEngine _engine;
 
         public PlasmaEffect()
         {
@@ -24,6 +25,8 @@ namespace plasma_effect
         protected override void Initialize()
         {
             this.Window.Title = Config.WINDOW_TITLE;
+
+            this._engine = new PlasmaEngine();
 
             base.Initialize();
         }
@@ -40,7 +43,7 @@ namespace plasma_effect
                 Exit();
 
             //update plasma
-            this._plasma = PlasmaEngine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
+            this._plasma = this._engine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
             base.Update(gameTime);
         }
