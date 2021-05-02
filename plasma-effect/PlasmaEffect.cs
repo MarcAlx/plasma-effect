@@ -20,6 +20,7 @@ namespace plasma_effect
             _graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1d / Config.FPS_CAP);
         }
 
         protected override void Initialize()

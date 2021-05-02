@@ -12,5 +12,10 @@ namespace plasmaeffect
         /// Tells if FPS should be displayed on screen
         /// </summary>
         public static readonly bool DISPLAY_FPS = true;
+
+        /// <summary>
+        /// FPS cap
+        /// </summary>
+        public static readonly int FPS_CAP = 20;
     }
 }
