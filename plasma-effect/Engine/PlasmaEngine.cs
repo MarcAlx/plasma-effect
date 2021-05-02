@@ -104,7 +104,7 @@ namespace plasmaeffect.Engine
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public Texture2D GeneratePlasma(GraphicsDevice device,int width,int height,ColorRampEnum colorRamp = ColorRampEnum.GRAY_SCALE)
+        public Texture2D GeneratePlasma(GraphicsDevice device,int width,int height,ColorRampEnum colorRamp = ColorRampEnum.GRAY_SCALE, int colorRampShift = 0)
         {
             Texture2D rect = new Texture2D(device, width, height);
 
@@ -114,7 +114,7 @@ namespace plasmaeffect.Engine
                 for (int y = 0; y < height; y++)
                 {
                     var p = this.GetPlasmaPatternAt(x, y, width, height);
-                    data[(y*width)+x] = this._colorRamp[colorRamp][p % 256];
+                    data[(y*width)+x] = this._colorRamp[colorRamp][(p+colorRampShift) % 256];
                 }
             }
             rect.SetData(data);

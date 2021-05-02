@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using plasmaeffect;
@@ -44,7 +45,8 @@ namespace plasma_effect
                 Exit();
 
             //update plasma
-            this._plasma = this._engine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height,ColorRampEnum.RAINBOW);
+            var shift = gameTime.TotalGameTime.Milliseconds % 256;
+            this._plasma = this._engine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height,ColorRampEnum.RAINBOW,shift);
 
             base.Update(gameTime);
         }
