@@ -104,19 +104,49 @@ namespace plasmaeffect.Engine
         /// <param name="width"></param>
         /// <param name="height"></param>
         /// <returns></returns>
-        public Texture2D GeneratePlasma(GraphicsDevice device,int width,int height,ColorRampEnum colorRamp = ColorRampEnum.GRAY_SCALE, int colorRampShift = 0)
+        public Texture2D GeneratePlasma(GraphicsDevice device,int width,int height,ColorRampEnum colorRamp = ColorRampEnum.GRAY_SCALE, int colorRampShift = 0, int ratio = 50)
         {
             Texture2D rect = new Texture2D(device, width, height);
 
             Color[] data = new Color[width * height];
-            for (int x = 0; x < width; x++)
+            /*for (int x = 0; x < width; x++)
             {
                 for (int y = 0; y < height; y++)
                 {
                     var p = this.GetPlasmaPatternAt(x, y, width, height);
-                    data[(y*width)+x] = this._colorRamp[colorRamp][(p+colorRampShift) % 256];
+                    var color = this._colorRamp[colorRamp][(p + colorRampShift) % 256];
+                    data[((y) * width) + (x)] = color;
+                }
+            }*/
+
+            /*for (int i=0; i < data.Length; i++)
+            {
+                var p = this.GetPlasmaPatternAt(i%width, i/width, width, height);
+                var color = this._colorRamp[colorRamp][(p + colorRampShift) % 256];
+                data[i] = color;
+            }*/
+
+            var stepX = ratio;
+            var stepY = ratio;
+            for (int x = 0; x < width;x+=stepX)
+            {
+                for (int y = 0; y < height;y+=stepY)
+                {
+                    var p = this.GetPlasmaPatternAt(x, y, width, height);
+                    var color = this._colorRamp[colorRamp][(p + colorRampShift) % 256];
+
+                    var topA = Math.Min(x + stepX, width);
+                    var topB = Math.Min(y + stepY, height);
+                    for (int a = x; a < topA; a++)
+                    {
+                        for (int b = y; b < topB; b++)
+                        {
+                            data[((b) * width) + (a)] = color;
+                        }
+                    }
                 }
             }
+
             rect.SetData(data);
 
             return rect;

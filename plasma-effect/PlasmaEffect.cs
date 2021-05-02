@@ -46,7 +46,14 @@ namespace plasma_effect
 
             //update plasma
             var shift = gameTime.TotalGameTime.Milliseconds % 256;
-            this._plasma = this._engine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height,ColorRampEnum.RAINBOW,shift);
+            this._plasma = this._engine.GeneratePlasma(
+                GraphicsDevice,
+                GraphicsDevice.Viewport.Bounds.Width,
+                GraphicsDevice.Viewport.Bounds.Height,
+                ColorRampEnum.RAINBOW,
+                shift,
+                Config.PIXEL_RATIO
+            );
 
             base.Update(gameTime);
         }
