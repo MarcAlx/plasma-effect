@@ -10,8 +10,8 @@ namespace plasma_effect
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
-
         private SpriteFont _defaultFont;
+        private Texture2D _plasma;
 
         public Game1()
         {
@@ -39,7 +39,8 @@ namespace plasma_effect
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            // TODO: Add your update logic here
+            //update plasma
+            this._plasma = PlasmaEngine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
 
             base.Update(gameTime);
         }
@@ -48,6 +49,10 @@ namespace plasma_effect
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             this._spriteBatch.Begin();
+
+            //draw plasma
+            this._spriteBatch.Draw(this._plasma, new Vector2(0, 0), Color.White);
+
 
             if (Config.DISPLAY_FPS)
             {
