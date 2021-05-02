@@ -50,14 +50,51 @@ namespace plasmaeffect.Engine
         }
 
         /// <summary>
-        /// Generate a sin pattern at a given value and scale
+        /// Generate a sin pattern at a given position and scale
         /// </summary>
         /// <param name="val"></param>
         /// <param name="scale"></param>
         /// <returns></returns>
-        private int GetSinPatternAt(double val,double scale = 1.0)
+        private int GetSinPatternAt(double pos,double scale = 1.0)
         {
-            return (int)Math.Floor(128.0 + (128.0 * Math.Sin(val / scale)));
+            return (int)(128.0 + (128.0 * Math.Sin(pos / scale)));
+        }
+
+        /// <summary>
+        /// Generate a square pattern by combining X and Y sin and scale
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        private int GetSquarePatternAt(double x, double y, double scale = 1.0)
+        {
+            return (this.GetSinPatternAt(x, scale) + this.GetSinPatternAt(y,scale))/2 ;
+        }
+
+        /// <summary>
+        /// Generate a ripple pattern at x and y 
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        private int GetRipplePatternAt(double x, double y, double scale = 1.0)
+        {
+            return this.GetSinPatternAt(Math.Sqrt(x * x + y * y), scale);
+        }
+
+        /// <summary>
+        /// Generate a ripple pattern at x and y 
+        /// </summary>
+        /// <param name="val"></param>
+        /// <param name="scale"></param>
+        /// <returns></returns>
+        private int GetPlasmaPatternAt(double x, double y,double width,double height)
+        {
+            return this.GetSquarePatternAt(x, y, 16.0)
+                 + this.GetRipplePatternAt(x, y, 8.0)
+                 + this.GetRipplePatternAt(x - width / 2, y - width / 2, 8.0)
+                 + this.GetSinPatternAt(x, 16)
+                 + this.GetSinPatternAt(y, 32);
         }
 
         /// <summary>
@@ -76,7 +113,8 @@ namespace plasmaeffect.Engine
             {
                 for (int y = 0; y < height; y++)
                 {
-                    data[(y*width)+x] = this._colorRamp[ColorRampEnum.GRAY_SCALE][this.GetSinPatternAt(y)];
+                    var p = this.GetPlasmaPatternAt(x, y, width, height);
+                    data[(y*width)+x] = this._colorRamp[colorRamp][p % 256];
                 }
             }
             rect.SetData(data);

@@ -43,7 +43,7 @@ namespace plasma_effect
                 Exit();
 
             //update plasma
-            this._plasma = this._engine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height);
+            this._plasma = this._engine.GeneratePlasma(GraphicsDevice, GraphicsDevice.Viewport.Bounds.Width, GraphicsDevice.Viewport.Bounds.Height,ColorRampEnum.RAINBOW);
 
             base.Update(gameTime);
         }
