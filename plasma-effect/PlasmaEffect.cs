@@ -6,14 +6,14 @@ using plasmaeffect.Engine;
 
 namespace plasma_effect
 {
-    public class Game1 : Game
+    public class PlasmaEffect : Game
     {
         private GraphicsDeviceManager _graphics;
         private SpriteBatch _spriteBatch;
         private SpriteFont _defaultFont;
         private Texture2D _plasma;
 
-        public Game1()
+        public PlasmaEffect()
         {
             this.Window.AllowUserResizing = true;
             _graphics = new GraphicsDeviceManager(this);
