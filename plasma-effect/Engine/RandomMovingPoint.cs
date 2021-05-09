@@ -44,7 +44,7 @@ namespace plasmaeffect.Engine
             if (futureX <= 0
             ||  futureY <= 0
             ||  futureY > this.boundHeight
-            ||  futureY > this.boundHeight)
+            ||  futureX > this.boundWidth)
             {
                 this.currentAngle = random.Next(90, 270);
                 this.currentSpeed = -this.currentSpeed;
